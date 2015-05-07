@@ -13,50 +13,34 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-buildscript {
-    repositories {
-        maven {
-            url "${HOST}/plugins-releases"
-            credentials {
-                username = "${USER}"
-                password = "${PASSWORD}"
-            }
-        }
-    }
-    dependencies {
-        classpath "com.github.townsfolk:gradle-release:1.2"
-    }
-}
+//buildscript {
+//    repositories {
+//        maven {
+//            url "${HOST}/plugins-releases"
+//            credentials {
+//                username = "${USER}"
+//                password = "${PASSWORD}"
+//            }
+//        }
+//    }
+//    dependencies {
+//    }
+//}
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'maven'
-apply plugin: 'release'
-
-configurations { deployerJars }
 
 group="com.livevox.demo"
 description="LiveVox Gradle Project Demo"
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+sourceCompatibility = '1.6'
+targetCompatibility = '1.6'
 
 repositories {
     maven {
         url "${HOST}/repo"
         credentials {username = "${USER}"; password = "${PASSWORD}" }
-    }
-}
-
-uploadArchives {
-    repositories.mavenDeployer {
-        configuration = configurations.deployerJars
-        repository(url: "${HOST}/libs-releases-local") {
-            authentication(userName: "${USER}", password: "${PASSWORD}")
-        }
-        snapshotRepository(url: "${HOST}/libs-snapshots-local") {
-            authentication(userName: "${USER}", password: "${PASSWORD}")
-        }
     }
 }
 
@@ -80,10 +64,4 @@ dependencies {
     compile "commons-io:commons-io:2.4"
 
     testCompile "junit:junit:4.11"
-
-    deployerJars "org.apache.maven.wagon:wagon-http:2.2"
 }
-
-release { tagPrefix = "${project.name}" }
-
-createReleaseTag.dependsOn uploadArchives
