@@ -33,6 +33,7 @@ apply plugin: 'idea'
 apply plugin: 'maven'
 
 group="com.livevox.demo"
+archivesBaseName='gradle-demo'
 description="LiveVox Gradle Project Demo"
 sourceCompatibility = '1.6'
 targetCompatibility = '1.6'
