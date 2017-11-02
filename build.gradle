@@ -35,12 +35,12 @@ apply plugin: 'maven'
 group="com.livevox.demo"
 archivesBaseName='gradle-demo'
 description="LiveVox Gradle Project Demo"
-sourceCompatibility = '1.6'
-targetCompatibility = '1.6'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 repositories {
     maven {
-        url "${HOST}/repo"
+        url "${HOST}/apirepo"
         credentials {username = "${USER}"; password = "${PASSWORD}" }
     }
 }
