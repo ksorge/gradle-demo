@@ -1,5 +1,5 @@
 /*
- *  Copyright 2014 LiveVox, Inc.
+ *  Copyright 2017 LiveVox, Inc.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,24 +13,27 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-//buildscript {
-//    repositories {
-//        maven {
-//            url "${HOST}/plugins-releases"
-//            credentials {
-//                username = "${USER}"
-//                password = "${PASSWORD}"
-//            }
-//        }
-//    }
-//    dependencies {
-//    }
-//}
+buildscript {
+    repositories {
+        maven {
+            url 'https://lvrepo.jfrog.io/lvrepo/apirepo'
+            credentials {
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+            }
+        }
+        
+    }
+    dependencies {
+        //Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4+"
+    }
+}
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'maven'
+apply plugin: 'com.jfrog.artifactory'
 
 group="com.livevox.demo"
 archivesBaseName='gradle-demo'
@@ -38,10 +41,23 @@ description="LiveVox Gradle Project Demo"
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
-repositories {
-    maven {
-        url "${HOST}/apirepo"
-        credentials {username = "${USER}"; password = "${PASSWORD}" }
+artifactory {
+    contextUrl = "${artifactory_contextUrl}"
+//    publish {
+//        repository {
+//            repoKey = 'libs-snapshot-local'
+//            username = "${artifactory_user}"
+//            password = "${artifactory_password}"
+//            maven = true          
+//        }
+//    }
+    resolve {
+        repository {
+            repoKey = 'apirepo'
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
     }
 }
 
