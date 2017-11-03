@@ -16,10 +16,10 @@
 buildscript {
     repositories {
         maven {
-            url 'https://lvrepo.jfrog.io/lvrepo/apirepo'
+            url = "${project.getProperty('artifactory.resolve.contextUrl')}/apirepo"
             credentials {
-                username = "${artifactory_user}"
-                password = "${artifactory_password}"
+                username = "${project.getProperty('artifactory.resolve.username')}"
+                password = "${project.getProperty('artifactory.resolve.password')}"
             }
         }
         
@@ -42,20 +42,21 @@ sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
 artifactory {
-    contextUrl = "${artifactory_contextUrl}"
-//    publish {
-//        repository {
-//            repoKey = 'libs-snapshot-local'
-//            username = "${artifactory_user}"
-//            password = "${artifactory_password}"
-//            maven = true          
-//        }
-//    }
+    publish {
+        contextUrl = "${project.getProperty('artifactory.publish.contextUrl')}"
+        repository {
+            repoKey = 'libs-snapshot-local'
+            username = "${project.getProperty('artifactory.publish.username')}"
+            password = "${project.getProperty('artifactory.publish.password')}"
+            maven = true          
+        }
+    }
     resolve {
+        contextUrl = "${project.getProperty('artifactory.resolve.contextUrl')}"
         repository {
             repoKey = 'apirepo'
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
+            username = "${project.getProperty('artifactory.resolve.username')}"
+            password = "${project.getProperty('artifactory.resolve.password')}"
             maven = true
         }
     }
