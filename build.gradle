@@ -15,13 +15,14 @@
  */
 buildscript {
     repositories {
-        maven {
-            url = "${project.getProperty('artifactory.resolve.contextUrl')}/apirepo"
-            credentials {
-                username = "${project.getProperty('artifactory.resolve.username')}"
-                password = "${project.getProperty('artifactory.resolve.password')}"
-            }
-        }
+        jcenter()
+//        maven {
+//            url = "${project.getProperty('artifactory.resolve.contextUrl')}/apirepo"
+//            credentials {
+//                username = "${project.getProperty('artifactory.resolve.username')}"
+//                password = "${project.getProperty('artifactory.resolve.password')}"
+//            }
+//        }
         
     }
     dependencies {
