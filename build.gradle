@@ -13,28 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-buildscript {
-    repositories {
-        jcenter()
-//        maven {
-//            url = "${project.getProperty('artifactory.resolve.contextUrl')}/apirepo"
-//            credentials {
-//                username = "${project.getProperty('artifactory.resolve.username')}"
-//                password = "${project.getProperty('artifactory.resolve.password')}"
-//            }
-//        }
-        
-    }
-    dependencies {
-        //Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4+"
-    }
-}
-
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven'
 
 group="com.livevox.demo"
 archivesBaseName='gradle-demo'
@@ -42,26 +24,15 @@ description="LiveVox Gradle Project Demo"
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
-artifactory {
-    publish {
-        contextUrl = "${project.getProperty('artifactory.publish.contextUrl')}"
-        repository {
-            repoKey = 'libs-snapshot-local'
-            username = "${project.getProperty('artifactory.publish.username')}"
-            password = "${project.getProperty('artifactory.publish.password')}"
-            maven = true          
+repositories {
+    maven {
+        url = "https://lvrepo.jfrog.io/lvrepo/apirepo"
+        credentials {
+            username = "${username}"
+            password = "${password}"
         }
     }
-    resolve {
-        contextUrl = "${project.getProperty('artifactory.resolve.contextUrl')}"
-        repository {
-            repoKey = 'apirepo'
-            username = "${project.getProperty('artifactory.resolve.username')}"
-            password = "${project.getProperty('artifactory.resolve.password')}"
-            maven = true
-        }
-    }
-}
+}        
 
 task sourcesJar(type: Jar, dependsOn:classes) {
     classifier = 'sources'
