@@ -8,14 +8,14 @@ node {
       // **       in the global configuration.           
 //      mvnHome = tool 'M3'
    }
-//   stage('Build') {
+   stage('Build') {
       // Run the maven build
-//      if (isUnix()) {
-//         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
-//      } else {
-//         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
-//      }
-//   }
+      if (isUnix()) {
+         sh "'./gradlew' clean build"
+      } else {
+         bat(/"gradlew.bat" clean build/)
+      }
+   }
 //   stage('Results') {
 //      junit '**/target/surefire-reports/TEST-*.xml'
 //      archive 'target/*.jar'
